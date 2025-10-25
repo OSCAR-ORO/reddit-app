@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchPosts } from "./features/posts/postSlice";
 import Search from "./components/Search";
 
-function Home() {
+export const Home = () => {
   const dispatch = useDispatch();
   const { posts, status } = useSelector((state) => state.posts);
 
