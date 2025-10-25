@@ -6,6 +6,12 @@ export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
     return data.data.children.map(post => post.data);
 });
 
+export const searchPosts = createAsyncThunk('posts/searchPosts', async (searchTerm) => {
+    const response = await fetch(`https://corsproxy.io/?https://www.reddit.com/search.json?q=${encodeURIComponent(searchTerm)}`);
+    const data = await response.json();
+    return data.data.children.map(post => post.data);
+});
+
 const postSlice = createSlice({
     name: 'posts',
     initialState: {posts: [], status: 'idle'},
@@ -24,6 +30,17 @@ const postSlice = createSlice({
                 state.posts = action.payload;
             })
             .addCase(fetchPosts.rejected, (state) => {
+                state.status = 'failed';
+            });
+        builder
+            .addCase(searchPosts.pending, (state) => {
+                state.status = 'loading';
+            })
+            .addCase(searchPosts.fulfilled, (state, action) => {
+                state.status = 'succeeded';
+                state.posts = action.payload;
+            })
+            .addCase(searchPosts.rejected, (state) => {
                 state.status = 'failed';
             });
     }
