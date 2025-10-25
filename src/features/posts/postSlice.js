@@ -1,7 +1,7 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 
 export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
-    const response = await fetch('https://www.reddit.com/r/popular.json');
+    const response = await fetch('https://corsproxy.io/?https://www.reddit.com/r/popular.json');
     const data = await response.json();
     return data.data.children.map(post => post.data);
 });
