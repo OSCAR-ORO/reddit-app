@@ -42,5 +42,8 @@ A simple web application that allows users to view and search Reddit posts using
 - Visit `/` to see popular Reddit posts.
 - Navigate to `/search` to search posts by keyword.
 
+### Cross-Browser Compatibility
+The application was tested on the latest versions of Chrome, Firefox, Safari, and Edge to ensure consistent rendering and functionality. CSS Modules were optimized with Autoprefixer, and the Vite build targets modern browsers (ES2020+). Any browser-specific issues were resolved to ensure a seamless user experience.
+
 ## License
 MIT License
