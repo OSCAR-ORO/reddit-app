@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Search from "./components/Search";
+// import Search from "./components/Search";
 import Home from "./components/Home";
 import './App.css';
 
@@ -9,7 +9,6 @@ function App() {
       <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/search" element={<Search />} />
       </Routes>
     </BrowserRouter>
     </div>

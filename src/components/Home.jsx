@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPosts } from "../features/posts/postSlice";
 import styles from "./Home.module.css";
+import { searchPosts } from "../features/posts/postSlice";
 
 function Home() {
   const dispatch = useDispatch();
   const { posts, status } = useSelector((state) => state.posts);
   const [selectedCategory, setSelectedCategory] = useState("popular");
+    const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     dispatch(fetchPosts(selectedCategory));
@@ -66,9 +68,33 @@ function Home() {
     );
   };
 
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (!searchTerm.trim()) return;
+    dispatch(searchPosts(searchTerm));
+  }
+
   return (
     <div className={styles.home}>
-      <h1>Reddit Posts</h1>
+      <h1>MiniReddits</h1>
+
+    <form onSubmit={handleSearch} className={styles.searchForm}>
+            <input
+              type="text"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="Enter search term"
+              className={styles.searchInput}
+            />
+            <button
+              type="submit"
+              disabled={status === "loading"}
+              className={styles.searchButton}
+            >
+              Search
+            </button>
+          </form>
+    
 
       <select
         value={selectedCategory}
@@ -80,7 +106,7 @@ function Home() {
         <option value="technology">Technology</option>
         <option value="funny">Funny</option>
       </select>
-    
+
       {status === "loading" && <p>Loading...</p>}
       {status === "failed" && <p>Error loading posts.</p>}
       {status === "succeeded" && (
