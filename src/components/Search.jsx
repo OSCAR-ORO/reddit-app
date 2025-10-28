@@ -13,7 +13,60 @@ function Search() {
     if (!searchTerm.trim()) return;
     dispatch(searchPosts(searchTerm));
   };
+const renderPostMedia = (post) => {
+    // 1️⃣ VIDEO
+    const videoUrl =
+      post?.secure_media?.reddit_video?.fallback_url ||
+      post?.media?.reddit_video?.fallback_url;
 
+    if (videoUrl) {
+      return (
+        <video
+          src={videoUrl}
+          controls
+          className={styles.postVideo}
+          style={{ maxWidth: "100%", borderRadius: "10px" }}
+        />
+      );
+    }
+
+    // 2️⃣ IMAGE
+    const imageUrl =
+      post?.preview?.images?.[0]?.source?.url?.replace(/&amp;/g, "&") ||
+      (post?.thumbnail &&
+        !["self", "default", "nsfw", "spoiler"].includes(post.thumbnail)
+          ? post.thumbnail
+          : null);
+
+    if (imageUrl) {
+      return (
+        <img
+          src={imageUrl}
+          alt={post.title}
+          className={styles.postImage}
+          style={{ maxWidth: "100%", borderRadius: "10px" }}
+        />
+      );
+    }
+
+    // 3️⃣ FALLBACK: interesting data
+    return (
+      <div className={styles.postFallback}>
+        {post.selftext ? (
+          <p>{post.selftext}</p>
+        ) : (
+          <a
+            href={`https://reddit.com${post.permalink}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            View Post ↗
+          </a>
+        )}
+      </div>
+    );
+  };
+  
   return (
     <div className={styles.search}>
       <h1>Search Reddit Posts</h1>
@@ -33,18 +86,22 @@ function Search() {
           Search
         </button>
       </form>
+
       {status === "loading" && <p>Searching...</p>}
       {status === "failed" && <p>Error searching posts.</p>}
       {status === "succeeded" && (
-        <ul className={styles.postList}>
-          {posts.map((post) => (
-            <li key={post.id} className={styles.postItem}>
-              <h2 className={styles.postTitle}>{post.title}</h2>
-              <p className={styles.postContent}>{post.selftext}</p>
-            </li>
-          ))}
-        </ul>
-      )}
+              <ul className={styles.postList}>
+                {posts.map((post) => (
+                  <li key={post.id} className={styles.postItem}>
+                    <h2 className={styles.postTitle}>{post.title}</h2>
+                    <p className={styles.postAuthor}>
+                      {post.author || post.author_fullname}
+                    </p>
+                    {renderPostMedia(post)}
+                  </li>
+                ))}
+              </ul>
+             )}
     </div>
   );
 }
