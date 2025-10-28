@@ -33,6 +33,26 @@ function Home() {
           {posts.map((post) => (
             <li key={post.id} className={styles.postItem}>
               <h2 className={styles.postTitle}>{post.title}</h2>
+              <p className={styles.postAuthor}>{post.author_fullname}</p>
+              <p className={styles.postContent}>{post.selftext}</p>
+              {post.preview?.images?.[0]?.source?.url && (
+                <img
+                  src={post.preview.images[0].source.url.replace(/&amp;/g, "&")}
+                  alt={post.title}
+                  className={styles.postImage}
+                  style={{ maxWidth: "100%", height: "auto" }} // Inline for quick fit
+                />
+              )}
+              {!post.preview &&
+                post.thumbnail &&
+                post.thumbnail !== "self" &&
+                post.thumbnail !== "default" && (
+                  <img
+                    src={post.thumbnail}
+                    alt={post.title}
+                    className={styles.postThumbnail}
+                  />
+                )}
               <p className={styles.postContent}>{post.selftext}</p>
             </li>
           ))}
