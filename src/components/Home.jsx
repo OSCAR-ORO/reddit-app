@@ -12,9 +12,64 @@ function Home() {
     dispatch(fetchPosts(selectedCategory));
   }, [dispatch, selectedCategory]);
 
+  const renderPostMedia = (post) => {
+    // 1️⃣ VIDEO
+    const videoUrl =
+      post?.secure_media?.reddit_video?.fallback_url ||
+      post?.media?.reddit_video?.fallback_url;
+
+    if (videoUrl) {
+      return (
+        <video
+          src={videoUrl}
+          controls
+          className={styles.postVideo}
+          style={{ maxWidth: "100%", borderRadius: "10px" }}
+        />
+      );
+    }
+
+    // 2️⃣ IMAGE
+    const imageUrl =
+      post?.preview?.images?.[0]?.source?.url?.replace(/&amp;/g, "&") ||
+      (post?.thumbnail &&
+        !["self", "default", "nsfw", "spoiler"].includes(post.thumbnail)
+          ? post.thumbnail
+          : null);
+
+    if (imageUrl) {
+      return (
+        <img
+          src={imageUrl}
+          alt={post.title}
+          className={styles.postImage}
+          style={{ maxWidth: "100%", borderRadius: "10px" }}
+        />
+      );
+    }
+
+    // 3️⃣ FALLBACK: interesting data
+    return (
+      <div className={styles.postFallback}>
+        {post.selftext ? (
+          <p>{post.selftext}</p>
+        ) : (
+          <a
+            href={`https://reddit.com${post.permalink}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            View Post ↗
+          </a>
+        )}
+      </div>
+    );
+  };
+
   return (
     <div className={styles.home}>
-      <h1> Reddit Posts</h1>
+      <h1>Reddit Posts</h1>
+
       <select
         value={selectedCategory}
         onChange={(e) => setSelectedCategory(e.target.value)}
@@ -28,32 +83,16 @@ function Home() {
 
       {status === "loading" && <p>Loading...</p>}
       {status === "failed" && <p>Error loading posts.</p>}
+
       {status === "succeeded" && (
         <ul className={styles.postList}>
           {posts.map((post) => (
             <li key={post.id} className={styles.postItem}>
               <h2 className={styles.postTitle}>{post.title}</h2>
-              <p className={styles.postAuthor}>{post.author_fullname}</p>
-              <p className={styles.postContent}>{post.selftext}</p>
-              {post.preview?.images?.[0]?.source?.url && (
-                <img
-                  src={post.preview.images[0].source.url.replace(/&amp;/g, "&")}
-                  alt={post.title}
-                  className={styles.postImage}
-                  style={{ maxWidth: "100%", height: "auto" }} // Inline for quick fit
-                />
-              )}
-              {!post.preview &&
-                post.thumbnail &&
-                post.thumbnail !== "self" &&
-                post.thumbnail !== "default" && (
-                  <img
-                    src={post.thumbnail}
-                    alt={post.title}
-                    className={styles.postThumbnail}
-                  />
-                )}
-              <p className={styles.postContent}>{post.selftext}</p>
+              <p className={styles.postAuthor}>
+                {post.author || post.author_fullname}
+              </p>
+              {renderPostMedia(post)}
             </li>
           ))}
         </ul>
