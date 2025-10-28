@@ -13,7 +13,8 @@ function Search() {
     if (!searchTerm.trim()) return;
     dispatch(searchPosts(searchTerm));
   };
-const renderPostMedia = (post) => {
+
+  const renderPostMedia = (post) => {
     // 1️⃣ VIDEO
     const videoUrl =
       post?.secure_media?.reddit_video?.fallback_url ||
@@ -34,9 +35,9 @@ const renderPostMedia = (post) => {
     const imageUrl =
       post?.preview?.images?.[0]?.source?.url?.replace(/&amp;/g, "&") ||
       (post?.thumbnail &&
-        !["self", "default", "nsfw", "spoiler"].includes(post.thumbnail)
-          ? post.thumbnail
-          : null);
+      !["self", "default", "nsfw", "spoiler"].includes(post.thumbnail)
+        ? post.thumbnail
+        : null);
 
     if (imageUrl) {
       return (
@@ -66,7 +67,6 @@ const renderPostMedia = (post) => {
       </div>
     );
   };
-  
   return (
     <div className={styles.search}>
       <h1>Search Reddit Posts</h1>
@@ -90,18 +90,18 @@ const renderPostMedia = (post) => {
       {status === "loading" && <p>Searching...</p>}
       {status === "failed" && <p>Error searching posts.</p>}
       {status === "succeeded" && (
-              <ul className={styles.postList}>
-                {posts.map((post) => (
-                  <li key={post.id} className={styles.postItem}>
-                    <h2 className={styles.postTitle}>{post.title}</h2>
-                    <p className={styles.postAuthor}>
-                      {post.author || post.author_fullname}
-                    </p>
-                    {renderPostMedia(post)}
-                  </li>
-                ))}
-              </ul>
-             )}
+        <ul className={styles.postList}>
+          {posts.map((post) => (
+            <li key={post.id} className={styles.postItem}>
+              <h2 className={styles.postTitle}>{post.title}</h2>
+              <p className={styles.postAuthor}>
+                {post.author || post.author_fullname}
+              </p>
+              {renderPostMedia(post)}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }

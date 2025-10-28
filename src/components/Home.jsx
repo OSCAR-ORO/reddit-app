@@ -33,9 +33,9 @@ function Home() {
     const imageUrl =
       post?.preview?.images?.[0]?.source?.url?.replace(/&amp;/g, "&") ||
       (post?.thumbnail &&
-        !["self", "default", "nsfw", "spoiler"].includes(post.thumbnail)
-          ? post.thumbnail
-          : null);
+      !["self", "default", "nsfw", "spoiler"].includes(post.thumbnail)
+        ? post.thumbnail
+        : null);
 
     if (imageUrl) {
       return (
@@ -80,10 +80,9 @@ function Home() {
         <option value="technology">Technology</option>
         <option value="funny">Funny</option>
       </select>
-
+    
       {status === "loading" && <p>Loading...</p>}
       {status === "failed" && <p>Error loading posts.</p>}
-
       {status === "succeeded" && (
         <ul className={styles.postList}>
           {posts.map((post) => (
