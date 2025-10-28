@@ -2,6 +2,15 @@
   width: 100%;
 }
 
+.categorySelect {
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: solid darkorange;
+  border-radius: 20px;
+  background-color: rgb(255, 140, 0);
+}
+
 .postList {
   list-style: none;
   padding: 0;

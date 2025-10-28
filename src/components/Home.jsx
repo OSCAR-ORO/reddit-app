@@ -1,4 +1,4 @@
-import { useEffect } from "react"; 
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPosts } from "../features/posts/postSlice";
 import styles from "./Home.module.css";
@@ -6,16 +6,26 @@ import styles from "./Home.module.css";
 function Home() {
   const dispatch = useDispatch();
   const { posts, status } = useSelector((state) => state.posts);
+  const [selectedCategory, setSelectedCategory] = useState("popular");
 
   useEffect(() => {
-    if (status === "idle") {
-      dispatch(fetchPosts());
-    }
-  }, [dispatch, status]);
+    dispatch(fetchPosts(selectedCategory));
+  }, [dispatch, selectedCategory]);
 
   return (
     <div className={styles.home}>
       <h1> Reddit Posts</h1>
+      <select
+        value={selectedCategory}
+        onChange={(e) => setSelectedCategory(e.target.value)}
+        className={styles.categorySelect}
+      >
+        <option value="popular">Popular</option>
+        <option value="news">News</option>
+        <option value="technology">Technology</option>
+        <option value="funny">Funny</option>
+      </select>
+
       {status === "loading" && <p>Loading...</p>}
       {status === "failed" && <p>Error loading posts.</p>}
       {status === "succeeded" && (
