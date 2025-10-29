@@ -3,37 +3,67 @@
 }
 
 .categorySelect {
-  margin-bottom: 1rem;
-  padding: 0.5rem;
+  margin-bottom: var(--spacing-medium);
+  padding: var(--spacing-small);
   font-size: 1rem;
-  border: solid darkorange;
+  border: 1px solid var(--primary-color);
   border-radius: 20px;
-  background-color: rgb(255, 140, 0);
-}
-
-.search {
-  width: 100%;
+  background-color: var(--primary-color);
+  color: var(--background-color);
 }
 
 .searchForm {
   display: flex;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
+  gap: var(--spacing-small);
+  margin-bottom: var(--spacing-medium);
 }
 
 .searchInput {
   flex: 1;
-  padding: 0.5rem;
+  padding: var(--spacing-small);
   font-size: 1rem;
-  border: 1px solid rgb(210, 176, 134);
+  border: 1px solid var(--primary-color);
   border-radius: 8px;
-  background-color: rgba(172, 143, 109, 0.521);
-  color: black;
+  background-color: rgba(218, 224, 230, 0.5); /* Lighten border color */
+  color: var(--text-color);
 }
 
 .searchButton {
-  padding: 0.5rem 1rem;
+  padding: var(--spacing-small) var(--spacing-medium);
+  background-color: var(--secondary-color);
+  color: var(--background-color);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
 }
+
+.postList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.postItem {
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: var(--spacing-medium);
+  margin-bottom: var(--spacing-medium);
+  background-color: #F6F7F8; /* Subtle bg for posts */
+}
+
+.postTitle {
+  font-size: 1.2rem;
+  margin: 0 0 var(--spacing-small);
+  color: var(--text-color);
+}
+
+.postAuthor {
+  font-size: 1rem;
+  color: var(--secondary-color);
+  margin-bottom: var(--spacing-small);
+}
+
+/* Keep your media styles and mobile adjustments, but swap colors/spacing to variables where possible */
 
 .postList {
   list-style: none;

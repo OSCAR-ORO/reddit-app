@@ -1,3 +1,23 @@
+:root {
+  --primary-color: #FF4500; /* Reddit orange */
+  --secondary-color: #0079D3; /* Blue accent */
+  --background-color: rgb(177, 206, 216);
+  --text-color: #1A1A1B;
+  --border-color: #DAE0E6;
+  --font-family: 'Arial', sans-serif;
+  --spacing-small: 0.5rem;
+  --spacing-medium: 1rem;
+  --spacing-large: 1.5rem;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--background-color);
+  color: var(--text-color);
+  margin: 0;
+  padding: var(--spacing-medium);
+}
+
 .app-container {
   max-width: 90%;
   margin: 0 auto;
