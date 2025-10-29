@@ -8,14 +8,13 @@ function Home() {
   const dispatch = useDispatch();
   const { posts, status } = useSelector((state) => state.posts);
   const [selectedCategory, setSelectedCategory] = useState("popular");
-    const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     dispatch(fetchPosts(selectedCategory));
   }, [dispatch, selectedCategory]);
 
   const renderPostMedia = (post) => {
-    // 1️⃣ VIDEO
     const videoUrl =
       post?.secure_media?.reddit_video?.fallback_url ||
       post?.media?.reddit_video?.fallback_url;
@@ -31,7 +30,6 @@ function Home() {
       );
     }
 
-    // 2️⃣ IMAGE
     const imageUrl =
       post?.preview?.images?.[0]?.source?.url?.replace(/&amp;/g, "&") ||
       (post?.thumbnail &&
@@ -50,7 +48,6 @@ function Home() {
       );
     }
 
-    // 3️⃣ FALLBACK: interesting data
     return (
       <div className={styles.postFallback}>
         {post.selftext ? (
@@ -78,23 +75,22 @@ function Home() {
     <div className={styles.home}>
       <h1>MiniReddits</h1>
 
-    <form onSubmit={handleSearch} className={styles.searchForm}>
-            <input
-              type="text"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="Enter search term"
-              className={styles.searchInput}
-            />
-            <button
-              type="submit"
-              disabled={status === "loading"}
-              className={styles.searchButton}
-            >
-              Search
-            </button>
-          </form>
-    
+      <form onSubmit={handleSearch} className={styles.searchForm}>
+        <input
+          type="text"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          placeholder="Enter search term"
+          className={styles.searchInput}
+        />
+        <button
+          type="submit"
+          disabled={status === "loading"}
+          className={styles.searchButton}
+        >
+          Search
+        </button>
+      </form>
 
       <select
         value={selectedCategory}
@@ -107,7 +103,7 @@ function Home() {
         <option value="funny">Funny</option>
       </select>
 
-      {status === "loading" && <p>Loading...</p>}
+      {status === "loading" && <p className={styles.loading}>Loading...</p>}
       {status === "failed" && <p>Error loading posts.</p>}
       {status === "succeeded" && (
         <ul className={styles.postList}>
