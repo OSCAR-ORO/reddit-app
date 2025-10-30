@@ -54,14 +54,10 @@
   padding: var(--spacing-medium);
   margin-bottom: var(--spacing-medium);
   background-color: #F6F7F8; 
-  /* opacity: 0; */
   transform: translateY(10px); /* Start slightly below */
   transition: opacity 0.3s ease, transform 0.3s ease; /* Smooth fade and slide */
 }
-.postItem.visible { /* We'll add this class dynamically */
-  opacity: 1;
-  transform: translateY(0);
-}
+
 .postItem:hover {
   transform: scale(1.02); /* Subtle zoom on hover */
   transition: transform 0.2s ease;
