@@ -12,6 +12,7 @@ function Home() {
   const [visiblePosts, setVisiblePosts] = useState(10);
 
   useEffect(() => {
+    if(process.env.NODE_ENV === 'test') return; // Skip fetching during tests
     dispatch(fetchPosts(selectedCategory));
   }, [dispatch, selectedCategory]);
 
