@@ -34,7 +34,7 @@ test('renders posts when status is succeeded', () => {
       posts: [{ id: '1', title: 'Test title', selftext: 'Test body' }],
     },
   })
-  expect(screen.getByText('Reddit Posts')).toBeInTheDocument()
+  expect(screen.getByText('MiniReddits')).toBeInTheDocument()
   expect(screen.getByText('Test title')).toBeInTheDocument()
   expect(screen.getByText('Test body')).toBeInTheDocument()
 })

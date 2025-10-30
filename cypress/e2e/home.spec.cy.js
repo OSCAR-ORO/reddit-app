@@ -35,7 +35,7 @@ describe('Home Page', () => {
     }).as('getPosts');
 
     cy.wait('@getPosts');
-    cy.contains('Reddit Posts').should('be.visible'); // Matches your Home.test.jsx
+    cy.contains('MiniReddits').should('be.visible'); // Matches your Home.test.jsx
     cy.contains('Test Post').should('be.visible');
     cy.contains('Test Content').should('be.visible');
   });
