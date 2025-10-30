@@ -9,6 +9,7 @@ function Home() {
   const { posts, status } = useSelector((state) => state.posts);
   const [selectedCategory, setSelectedCategory] = useState("popular");
   const [searchTerm, setSearchTerm] = useState("");
+  const [visiblePosts, setVisiblePosts] = useState(10);
 
   useEffect(() => {
     dispatch(fetchPosts(selectedCategory));
@@ -24,8 +25,8 @@ function Home() {
         <video
           src={videoUrl}
           controls
-          className={styles.postVideo}
-          style={{ maxWidth: "100%", borderRadius: "10px" }}
+          style={{ width: "100%", maxWidth: "600px", borderRadius: "10px" }}
+          loading="lazy"
         />
       );
     }
@@ -43,7 +44,7 @@ function Home() {
           src={imageUrl}
           alt={post.title}
           className={styles.postImage}
-          style={{ maxWidth: "100%", borderRadius: "10px" }}
+          loading="lazy"
         />
       );
     }
@@ -69,7 +70,7 @@ function Home() {
     e.preventDefault();
     if (!searchTerm.trim()) return;
     dispatch(searchPosts(searchTerm));
-  }
+  };
 
   return (
     <div className={styles.home}>
@@ -106,17 +107,27 @@ function Home() {
       {status === "loading" && <p className={styles.loading}>Loading...</p>}
       {status === "failed" && <p>Error loading posts.</p>}
       {status === "succeeded" && (
-        <ul className={styles.postList}>
-          {posts.map((post) => (
-            <li key={post.id} className={styles.postItem}>
-              <h2 className={styles.postTitle}>{post.title}</h2>
-              <p className={styles.postAuthor}>
-                {post.author || post.author_fullname}
-              </p>
-              {renderPostMedia(post)}
-            </li>
-          ))}
-        </ul>
+        <div>
+          <ul className={styles.postList}>
+            {posts.slice(0, visiblePosts).map((post) => (
+              <li key={post.id} className={styles.postItem}>
+                <h2 className={styles.postTitle}>{post.title}</h2>
+                <p className={styles.postAuthor}>
+                  {post.author || post.author_fullname}
+                </p>
+                {renderPostMedia(post)}
+              </li>
+            ))}
+          </ul>
+          {visiblePosts < posts.length && (
+            <button
+              onClick={() => setVisiblePosts((prev) => prev + 10)}
+              className={styles.loadMore}
+            >
+              Load More
+            </button>
+          )}
+        </div>
       )}
     </div>
   );

@@ -57,6 +57,14 @@
   transform: translateY(10px); /* Start slightly below */
   transition: opacity 0.3s ease, transform 0.3s ease; /* Smooth fade and slide */
 }
+.postImage {
+  width: 100%;
+  max-width: 600px;  
+  height: auto;
+  object-fit: cover; 
+  display: block;
+  border-radius: 10px;
+}
 
 .postItem:hover {
   transform: scale(1.02); /* Subtle zoom on hover */
@@ -87,6 +95,17 @@
   animation: pulse 1.5s infinite;
 }
 
+.loadMore {
+  display: block;
+  margin: var(--spacing-medium) auto;
+  padding: var(--spacing-small) var(--spacing-medium);
+  background-color: var(--secondary-color);
+  color: var(--background-color);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
 @keyframes pulse {
   0% { opacity: 0.6; }
   50% { opacity: 1; }
