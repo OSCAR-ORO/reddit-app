@@ -8,8 +8,8 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "test": "vitest", 
-    "cy:open": "cypress open", 
+    "test": "vitest",
+    "cy:open": "cypress open",
     "cy": "cypress run"
   },
   "dependencies": {
@@ -33,6 +33,7 @@
     "globals": "^16.4.0",
     "jsdom": "^27.0.1",
     "vite": "^7.1.7",
+    "vite-plugin-pwa": "^1.1.0",
     "vitest": "^4.0.3"
   }
 }
